@@ -196,7 +196,7 @@ async function fetchMessages() {
   }
 }
 
-setInterval(fetchMessages, 500); // Fetch messages every 500ms
+setInterval(fetchMessages, 500); 
 </script>
 
 </body>
