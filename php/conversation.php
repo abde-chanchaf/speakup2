@@ -130,11 +130,14 @@ a{
         height: 100vh;
         border-radius: 0;
       }
+<<<<<<< HEAD
     }
     .child{
       display:flex;
     align-items:center;
     gap: 5px;
+=======
+>>>>>>> 81afa7dd118e0779765e8a58eb5a36be2a97c9e3
     }
   </style>
 </head>
@@ -145,6 +148,7 @@ a{
 
 <div class="chatbox shadow">
   <div class="chatbox-header">
+<<<<<<< HEAD
    <div class="child"> <a href="../index.php" class="rtn"><i class="fas fa-arrow-left"></i>&nbsp;&nbsp;SpeakUp</a></div>
    <div class="child">
    <h5 class="m-0 text-white flex-grow-1 text-center"><?= $row6['name_us'] ?></h5>
@@ -152,6 +156,11 @@ a{
 
    </div>
 
+=======
+    <button class="rtn" aria-label="Retour"><a href="../index.php"><i class="fas fa-arrow-left"></i></a></button>
+    <h5 class="m-0 text-white flex-grow-1 text-center">SpeakUp</h5>
+    <a href="../speak/pages/profil.php?id=<?= $row6['id_us'] ?>"><img src="../images/<?= $row6['img_us'] ?>" alt="Profil" class="img2"></a>
+>>>>>>> 81afa7dd118e0779765e8a58eb5a36be2a97c9e3
   </div>
 
   <div class="chatbox-body" id="chatBody"></div>
@@ -176,7 +185,11 @@ let scroll = true;
 $('#chatForm').on('submit', function(e) {
   e.preventDefault();
   $.ajax({
+<<<<<<< HEAD
     url: '../php/send.php?id='+id_am,
+=======
+    url: '../php/send.php',
+>>>>>>> 81afa7dd118e0779765e8a58eb5a36be2a97c9e3
     type: 'POST',
     data: { message: $('#message').val(), id_am: id_am },
     success: function(res) {
