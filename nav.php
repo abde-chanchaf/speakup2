@@ -1,10 +1,10 @@
 <style>
     .nav {
-        height: 80px;
-        width: 80px;
+        height: 58px;
+        width: 58px;
         position: fixed;
         top: 10vh;
-        left: 26.3vw;
+        left: 27.3vw;
         background-color: black;
         border-radius: 30px;
         display: flex;
@@ -13,6 +13,10 @@
         align-items: center;
         gap: 35px;
         font-size: 20px;
+    }
+    .fa-solid{ 
+      font-size:25px;
+
     }
 
     img {
@@ -64,11 +68,14 @@
         position: absolute;
         top: 50px; 
         left: -50px;
+        border-radius: 30px;
         background-color: #f1f1f1;
         min-width: 160px;
         box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
         z-index: 1;
+        
     }
+    
 
     .dropup-content a {
         color: black;
@@ -83,6 +90,7 @@
 
     .dropup:hover .dropup-content {
         display: block;
+        
     }
 
     .dropup:hover .dropbtn {
@@ -91,6 +99,7 @@
 
     .dropup:hover i {
         color: black;
+       
     }
     @media (max-width: 800px) {
       .nav {
@@ -111,7 +120,7 @@
     .dropup-content {
         display: none;
         position: absolute;
-        top: 50px; /* Pushes the menu downward */
+        top: 50px; 
         left: 0px;
         background-color: #f1f1f1;
         min-width: 160px;
@@ -125,11 +134,11 @@
     <div class="dropup">
         <button class="dropbtn"><i class="fa-solid fa-bars"></i></button>
         <div class="dropup-content">
-            <a class="hr" href="speak/pages/profil.php">profil</a>
-            <a class="hr" href="speak/pages/deco.php">logout</a>
             <a class="hr" href="./?amis">Amis</a>
             <a class="hr" href="./?att">En attant</a>
             <a class="hr" href="./?ajout">Ajout</a>
+            <a class="hr" href="speak/pages/profil.php">profil</a>
+            <a class="hr" style="background-color: red; c" href="speak/pages/deco.php">logout</a>
         </div>
     </div>
 </div>

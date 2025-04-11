@@ -1,6 +1,54 @@
 <?php
 require_once '../../config.php';
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
+require '../vendor/autoload.php';
+
+// ---------------------start 6 chivres-------------------
+function generateCode() {
+    $letter1 = '';
+    $letter2 = '';
+    for ($i = 0; $i < 1; $i++) {
+        $letter1 .= chr(rand(65, 90));
+        $letter2 .= chr(rand(65, 90));
+    }
+
+    $number1 = rand(10, 99);
+    $number2 = rand(10, 99);
+
+    return $letter1 . $number1 . $letter2 . $number2;
+}
+
+// Function to send verification email
+function sendEmail($email, $code) {
+    $mail = new PHPMailer(true);
+    try {
+        // Server settings
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'chkouritarik03@gmail.com'; // Replace with your email
+        $mail->Password = 'dmwvqrhcmwspzrnc'; // Replace with your email password (App Password)
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+        $mail->Port = 587;
+
+        // Recipients
+        $mail->setFrom('chkouritarik03@gmail.com', 'SpeakUp');
+        $mail->addAddress($email, $email); // Email is passed as recipient
+
+        // Content
+        $mail->isHTML(true);
+        $mail->Subject = 'Email Verification';
+        $mail->Body = "Your verification code is: <strong>$code</strong>";
+
+        $mail->send();
+    } catch (Exception $e) {
+        echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
+    }
+}
+$cd=generateCode();
+sendEmail($_GET['email'],$cd);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $code = $_POST['code'];
@@ -11,9 +59,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($row) {
       
-        $sql = "UPDATE user SET verified=1 WHERE email_us='$email'";
-        if (mysqli_query($con, $sql)) {
-            $idus= $row['id_us'];
+        $sql1 = "UPDATE user SET verified=1 and verification_code=".$cd." WHERE email_us=".$email."";
+        $result1 = mysqli_query($con, $sql1);
+        if ($result1) {
             header("location:login.php");
         } else {
             echo '<center><span class="badge text-bg-danger"><h6>Failed to verify email!</h6></span></center>';

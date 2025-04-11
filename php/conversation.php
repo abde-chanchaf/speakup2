@@ -1,71 +1,90 @@
-
 <?php
 require_once '../config.php';
-$id_am = intval($_GET['id_am']);
 
-if (isset($_SESSION['id'])) {
-  $id = $_SESSION['id'];
-} else {
-  $id = isset($_COOKIE['id']);
+if (!isset($_SESSION['id']) && !isset($_COOKIE['id'])) {
+    header("Location: ../login.php");
+    exit();
 }
 
+$id_am = mysqli_real_escape_string($con, $_GET['id_am']);
+$id = $_SESSION['id'] ?? $_COOKIE['id'];
+
+// Marquer les messages comme lus
 $sql1 = "UPDATE message 
          JOIN conversation ON message.id_cv = conversation.id_cv 
          SET message.vue_ms = 1 
-         WHERE conversation.id_am = $id_am and message.id_send != $id";
+         WHERE conversation.id_am = $id_am AND message.id_send != $id";
 mysqli_query($con, $sql1);
+
+// Récupérer les infos de l’ami
+$sql5 = "SELECT * FROM amis WHERE id_am = $id_am";
+$result5 = mysqli_query($con, $sql5);
+$row5 = mysqli_fetch_array($result5);
+$friend_id = ($row5['id_us1'] != $id) ? $row5['id_us1'] : $row5['id_us2'];
+
+$sql6 = "SELECT * FROM user WHERE id_us = $friend_id";
+$result6 = mysqli_query($con, $sql6);
+$row6 = mysqli_fetch_array($result6);
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensure responsiveness -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SpeakUp</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> 
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <style>
     body {
-      height: 100vh;
-      width: 100vw;
       margin: 0;
       padding: 0;
-      overflow: hidden;
-      background-image: url(../images/si.jpg);
+      background-image: url('../images/si.jpg');
       background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      height: 100vh;
+      width: 100vw;
     }
-
+a{
+  text-decoration:none;
+}
     .chatbox {
       max-width: 600px;
+      height: 100vh;
       margin: auto;
-      border: 1px solid #dee2e6;
-      border-radius: 10px;
       display: flex;
       flex-direction: column;
-      height: 100vh;
+      border-radius: 10px;
       background-color: white;
+      overflow: hidden;
+      border: 1px solid #ccc;
     }
 
     .chatbox-header {
       padding: 10px;
       background-color: #0d6efd;
       color: white;
-      border-top-left-radius: 10px;
-      border-top-right-radius: 10px;
       display: flex;
       justify-content: space-between;
       align-items: center;
+
     }
 
     .chatbox-body {
       flex: 1;
-      padding: 10px;
       overflow-y: auto;
-      overflow-x: hidden;
+      padding: 10px;
       background-color: #f8f9fa;
       display: flex;
-      flex-direction: column;  
+      flex-direction: column;
+    }
+
+    .chatbox-footer {
+      padding: 10px;
+      background-color: #fff;
+      border-top: 1px solid #ccc;
     }
 
     .chatbox-message {
@@ -90,206 +109,123 @@ mysqli_query($con, $sql1);
       word-wrap: break-word;
     }
 
-    .chatbox-footer {
-      padding: 10px;
-      border-top: 1px solid #dee2e6;
-      background-color: #fff;
+    .img2 {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #ccc;
     }
 
     .rtn {
       background: none;
       border: none;
-      font-size: 24px;
-      cursor: pointer;
+      font-size: 22px;
       color: white;
     }
 
-    a {
-      color: white;
-      text-decoration: none;
-    }
-
-    p {
-      max-width: 100%;
-      height: auto;
-      padding: auto;
-      word-wrap: break-word;
-      overflow-wrap: break-word;
-      margin-bottom: 10px;
-    }
-
-    h5{
-      position: absolute;
-      left:33.5vw;
-    }
-
-    .img2 {
-      width: 50px; 
-      height: 50px; 
-      border-radius: 50%; 
-      object-fit: cover;  
-      border: 2px solid #ccc;
-      margin: 10px 0; 
-    }
-
-   -------------tele-------------------
-    @media (max-width: 800px) {
+    @media (max-width: 768px) {
       .chatbox {
         width: 100%;
-<<<<<<< HEAD
-        height: 90vh;
-        position: absolute;
-        top:-30px;
-=======
-        height: 101%;
-        position: absolute;
-        top:-10px;
->>>>>>> 43f7b357ab9d6a9cc4831c3f3b029b2cc2348922
+        height: 100vh;
         border-radius: 0;
-        margin: 0;
       }
-
-<<<<<<< HEAD
-      .chatbox-footer {
-        position: fixed;
-      }
-      .chatbox-header h5 {
-        font-size: 18px;
->>>>>>> 43f7b357ab9d6a9cc4831c3f3b029b2cc2348922
-      }
-
-      .img2 {
-        width: 50px; 
-    height: 50px; 
-    border-radius: 50%; 
-    object-fit: cover;  
-    border: 2px solid #ccc;
-    margin: 10px 0;  
-      }
-<<<<<<< HEAD
-      
-=======
->>>>>>> 43f7b357ab9d6a9cc4831c3f3b029b2cc2348922
+    }
+    .child{
+      display:flex;
+    align-items:center;
+    gap: 5px;
     }
   </style>
 </head>
 <body>
+
 <input type="hidden" id="id_am" value="<?= $id_am ?>">
 <input type="hidden" id="id_session" value="<?= $id ?>">
 
-<div class="chatbox shadow mt-2">
+<div class="chatbox shadow">
   <div class="chatbox-header">
-    <button class="rtn">
-      <a href="../index.php"><i class="fas fa-arrow-left"></i></a>
-    </button>
-    <!-- ----------------------------- sql -->
-     <?php
-     $sql5= "SELECT * FROM `amis` WHERE id_am=$id_am ";
-     $result5=mysqli_query($con,$sql5);
-     $row5=mysqli_fetch_array($result5);
-     if ($row5['id_us1']!=$_SESSION['id']) {
-      $sql6= "SELECT * FROM `user` WHERE id_us=".$row5['id_us1']."";
-      $result6=mysqli_query($con,$sql6);
-      $row6=mysqli_fetch_array($result6);
-     }else {
-      $sql6= "SELECT * FROM `user` WHERE id_us=".$row5['id_us2']."";
-      $result6=mysqli_query($con,$sql6);
-      $row6=mysqli_fetch_array($result6);
-     }
-?>
-    <h5 class="mb-0 ">SpeakUp</h5>
-    <a href="../speak/pages/profil.php?id=<?php echo $row6['id_us']?>"><img src="../images/<?php echo $row6['img_us']?>" alt="Photo de profil" class="img2"></a>
+   <div class="child"> <a href="../index.php" class="rtn"><i class="fas fa-arrow-left"></i>&nbsp;&nbsp;SpeakUp</a></div>
+   <div class="child">
+   <h5 class="m-0 text-white flex-grow-1 text-center"><?= $row6['name_us'] ?></h5>
+   <a href="../speak/pages/profil.php?id=<?= $row6['id_us'] ?>"><img src="../images/<?= $row6['img_us'] ?>" alt="Profil" class="img2"></a>
 
- </div>
+   </div>
+
+  </div>
+
   <div class="chatbox-body" id="chatBody"></div>
+
   <div class="chatbox-footer">
-    <form id="chatForm" >
+    <form id="chatForm">
       <div class="input-group">
-        <input type="text" class="form-control" name="message" id="message" placeholder="Écrire un message..." required>
+        <input type="text" class="form-control" id="message" name="message" placeholder="Écrire un message..." required>
         <button class="btn btn-primary" type="submit">Envoyer</button>
       </div>
     </form>
   </div>
 </div>
 
-
-<!-- <script src="../js/script.js"></script> -->
 <script>
-  
 const chatbody = document.getElementById("chatBody");
 const id_am = document.getElementById("id_am").value;
 const id_session = document.getElementById("id_session").value;
-const message=document.querySelector("#message");
-
 let scroll = true;
 
-
-
-
-
-//   method POST
+// Gestion de l’envoi
 $('#chatForm').on('submit', function(e) {
-e.preventDefault(); 
-    $.ajax({
-      url: '../php/send.php?id='+id_am,
-      type: 'POST',
-      data: $(this).serialize(), 
-      success:function(res) {
-        // console.log(res);
-        $('#message').val('');
-        // message.value="";
-      } ,
-      error: function(error) {
-        $('#message').html('<div class="alert alert-danger" role="alert">'+error+'</div>');
-      }
-    });
-
+  e.preventDefault();
+  $.ajax({
+    url: '../php/send.php?id='+id_am,
+    type: 'POST',
+    data: { message: $('#message').val(), id_am: id_am },
+    success: function(res) {
+      $('#message').val('');
+    },
+    error: function(error) {
+      alert("Erreur lors de l'envoi");
+    }
   });
+});
 
-
-
-
-
-
-
+// Gestion du scroll intelligent
 chatbody.addEventListener('scroll', () => {
   const threshold = 50;
   scroll = chatbody.scrollHeight - chatbody.scrollTop - chatbody.clientHeight < threshold;
 });
 
+// Récupérer les messages
 async function fetchMessages() {
   try {
     const res = await fetch('json.php?id_am=' + id_am);
     const data = await res.json();
-    // Clearmsg
-    chatbody.innerHTML = ""; 
+    chatbody.innerHTML = '';
 
     data.forEach(msg => {
-      const wrapper = document.createElement('p');
-      const msgdiv = document.createElement('div');
-
-      msgdiv.classList.add("p-2", "rounded");
-      msgdiv.innerHTML = msg.content;
+      const p = document.createElement('p');
+      const div = document.createElement('div');
+      div.innerHTML = msg.content;
 
       if (msg.id_send == id_session) {
-        wrapper.classList.add("chatbox-message");  
+        p.className = 'chatbox-message';
       } else {
-        wrapper.classList.add("chatbox-message1"); 
+        p.className = 'chatbox-message1';
       }
 
-      wrapper.appendChild(msgdiv);
-      chatbody.appendChild(wrapper);
+      p.appendChild(div);
+      chatbody.appendChild(p);
     });
 
     if (scroll) {
       chatbody.scrollTop = chatbody.scrollHeight;
     }
-  } catch (error) {
-    console.error("Erreur:", error);
+
+  } catch (err) {
+    console.error('Erreur chargement messages :', err);
   }
 }
 
-setInterval(fetchMessages, 500); // Fetch messages every 500ms
+setInterval(fetchMessages, 800); // refresh chat
 </script>
 
 </body>

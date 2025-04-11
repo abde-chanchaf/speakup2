@@ -56,6 +56,10 @@ require_once '../../config.php';
         $result = mysqli_query($con, $sql);
         $row = mysqli_fetch_assoc($result);
         if(mysqli_num_rows($result)>0){
+if ($row['verified']!=1 ) {
+    echo '<center><div class="badge text-bg-danger text-center"><h6><a href="./verify.php?email='.$email1.'">your account not verified</a></h6></div></center>';
+}else {
+    
 
             $_SESSION['id']=$row['id_us'];
     
@@ -66,17 +70,17 @@ require_once '../../config.php';
                 $_SESSION['id']=$row['id_us'];
            
                 
-             }
+             }    else {
+                echo '<center><div class="badge text-bg-danger text-center"><h6>Incorrect email or password</h6></div></center>';
+            }
              $sql = "UPDATE user set status_us=1 WHERE id_us=".$row['id_us']."";
              $result = mysqli_query($con, $sql);
 
              header("Location:../../index.php?".$_SESSION['id']."");
 
-            }
-             else {
-            echo '<center><div class="badge text-bg-danger text-center"><h6>Incorrect email or password</h6></div></center>';
-        }
-    }
+            
+         
+    }}}
     ?>
 
 </body>
