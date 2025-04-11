@@ -1,8 +1,4 @@
 
-
-
-
-
 <style>
 .nav{
             height: 10vh;
