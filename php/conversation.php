@@ -1,3 +1,4 @@
+// tsssssssssssssst
 <?php
 require_once '../config.php';
 $id_am = intval($_GET['id_am']);
@@ -19,6 +20,7 @@ mysqli_query($con, $sql1);
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensure responsiveness -->
   <title>SpeakUp</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"> 
@@ -114,6 +116,45 @@ mysqli_query($con, $sql1);
       overflow-wrap: break-word;
       margin-bottom: 10px;
     }
+
+    h5{
+      position: absolute;
+      left:33.5vw;
+    }
+
+    .img2 {
+      width: 50px; 
+      height: 50px; 
+      border-radius: 50%; 
+      object-fit: cover;  
+      border: 2px solid #ccc;
+      margin: 10px 0; 
+    }
+
+   -------------tele-------------------
+    @media (max-width: 800px) {
+      .chatbox {
+        width: 100%;
+        height: 101%;
+        position: absolute;
+        top:-10px;
+        border-radius: 0;
+        margin: 0;
+      }
+
+      .chatbox-header h5 {
+        font-size: 18px;
+      }
+
+      .img2 {
+        width: 50px; 
+    height: 50px; 
+    border-radius: 50%; 
+    object-fit: cover;  
+    border: 2px solid #ccc;
+    margin: 10px 0;  
+      }
+    }
   </style>
 </head>
 <body>
@@ -122,11 +163,28 @@ mysqli_query($con, $sql1);
 
 <div class="chatbox shadow mt-2">
   <div class="chatbox-header">
-    <h5 class="mb-0">SpeakUp</h5>
     <button class="rtn">
       <a href="../index.php"><i class="fas fa-arrow-left"></i></a>
     </button>
-  </div>
+    <!-- ----------------------------- sql -->
+     <?php
+     $sql5= "SELECT * FROM `amis` WHERE id_am=$id_am ";
+     $result5=mysqli_query($con,$sql5);
+     $row5=mysqli_fetch_array($result5);
+     if ($row5['id_us1']!=$_SESSION['id']) {
+      $sql6= "SELECT * FROM `user` WHERE id_us=".$row5['id_us1']."";
+      $result6=mysqli_query($con,$sql6);
+      $row6=mysqli_fetch_array($result6);
+     }else {
+      $sql6= "SELECT * FROM `user` WHERE id_us=".$row5['id_us2']."";
+      $result6=mysqli_query($con,$sql6);
+      $row6=mysqli_fetch_array($result6);
+     }
+?>
+    <h5 class="mb-0 ">SpeakUp</h5>
+    <a href="../speak/pages/profil.php?id=<?php echo $row6['id_us']?>"><img src="../images/<?php echo $row6['img_us']?>" alt="Photo de profil" class="img2"></a>
+
+ </div>
   <div class="chatbox-body" id="chatBody"></div>
   <div class="chatbox-footer">
     <form id="chatForm" method="post">
@@ -196,7 +254,7 @@ async function fetchMessages() {
   }
 }
 
-setInterval(fetchMessages, 500); 
+setInterval(fetchMessages, 500); // Fetch messages every 500ms
 </script>
 
 </body>
