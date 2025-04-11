@@ -5,7 +5,7 @@
 
 <style>
 .nav{
-            height: 10vh;
+            height: 11vh;
             width: 500px;
             position:absolute;
             bottom:  0vh;
