@@ -136,15 +136,26 @@ mysqli_query($con, $sql1);
     @media (max-width: 800px) {
       .chatbox {
         width: 100%;
+<<<<<<< HEAD
         height: 90vh;
         position: absolute;
         top:-30px;
+=======
+        height: 101%;
+        position: absolute;
+        top:-10px;
+>>>>>>> 43f7b357ab9d6a9cc4831c3f3b029b2cc2348922
         border-radius: 0;
         margin: 0;
       }
 
+<<<<<<< HEAD
       .chatbox-footer {
         position: fixed;
+      }
+      .chatbox-header h5 {
+        font-size: 18px;
+>>>>>>> 43f7b357ab9d6a9cc4831c3f3b029b2cc2348922
       }
 
       .img2 {
@@ -155,7 +166,10 @@ mysqli_query($con, $sql1);
     border: 2px solid #ccc;
     margin: 10px 0;  
       }
+<<<<<<< HEAD
       
+=======
+>>>>>>> 43f7b357ab9d6a9cc4831c3f3b029b2cc2348922
     }
   </style>
 </head>
