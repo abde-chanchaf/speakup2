@@ -12,7 +12,8 @@
   width:100vw;
   margin: 0px;
   padding: 0px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
     }
     .card {
         width: 300px;
@@ -22,7 +23,7 @@
         display: flex;
         align-items: center;
         gap: 10px;
-        background: purple;
+        background: white;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         position: relative;
     }
@@ -79,6 +80,7 @@
         width: 335px;
         margin: 5px;
         padding: 5px;
+        
     }
     li{
         margin-bottom:5px;
@@ -86,7 +88,7 @@
         .add{
             position:absolute;
             font-size:30px;
-            color:red;
+            color:#e8bcb9;
             top:30vh;
             
         }
@@ -115,6 +117,21 @@
             left: 55px;
            border-radius:50%;
         }
+        @media (max-width: 800px) {
+            .card {
+        width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        margin-left:180px;
+        gap: 10px;
+        background: purple;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+    }
     
 </style>
 

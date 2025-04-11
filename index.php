@@ -12,13 +12,23 @@ if (!isset($_SESSION['id'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body{
-            background-color: linear-gradient(to bottom, rgb(45, 2, 45)20%, purple 50%, rgb(231, 79, 231),rgb(242, 145, 242));
-        }
+          body {
+        font-family: Arial, sans-serif;
+        background-image: linear-gradient(to bottom, rgb(45, 2, 45)20%, purple 50%, rgb(231, 79, 231),rgb(242, 145, 242));
+        background-attachment: fixed;
+        height:100vh;
+  width:100vw;
+  margin: 0px;
+  padding: 0px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+    }
+    
         
     </style>
 </head>
 <body>
+   
  <?php
  
 

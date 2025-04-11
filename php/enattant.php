@@ -10,7 +10,8 @@
   width:100vw;
   margin: 0px;
   padding: 0px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
     }
         .card {
             width: 300px;
@@ -88,6 +89,34 @@
             right: 39vw;
             width: 400px;
         }
+        @media (max-width: 800px) {
+            .card {
+        width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        margin-left:180px;
+        gap: 10px;
+        background: purple;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        position: relative;
+    }
+    .card {
+            width: 300px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            margin-left:180px;
+        gap: 10px;
+        background: purple;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        position: relative;
+        }
+    }
             
        
         

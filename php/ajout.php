@@ -7,8 +7,9 @@
         height:100vh;
   width:100vw;
   margin: 0px;
-  padding: 0px;
-  overflow: hidden;
+  padding-top: 65px;
+  overflow-x: hidden;
+  overflow-y: scroll;
     }
         .card {
             width: 320px;
@@ -17,6 +18,7 @@
             padding: 10px;
             display: flex;
             align-items: center;
+            margin-left:500px;
             gap: 10px;
             background: white;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
@@ -79,38 +81,7 @@
         li{
             margin-bottom:5px;
         }
-        .saerch{
-            width: 250px;
-            height: 0px;
-            outline: none;
-            border:none;
-            padding: 15px;  
-            position: absolute;
-            
-            font-size:17px;
-            border-radius:20px; 
-             
-        }
-        .saerchc{
-            width: 300px;
-            height: 30px;
-            border-radius:20px;
-            border: 2px solid black; 
-            position: relative;
-            margin-left:55px;
-            margin-bottom:15px;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-                
-        }
-        .saerchc i{
-             font-size:20px;
-            position: absolute;
-            right: 15px;
-            top:-20;
-                
-        }
+        :
         .div{
             height: 90vh;
             position:absolute;
@@ -118,6 +89,23 @@
             right: 39vw;
             width: 400px;
         }
+        @media (max-width: 800px) {
+            
+            .card {
+                    width: 320px;
+                    border: 1px solid #ddd;
+                    border-radius: 10px;
+                    padding: 10px;
+                    display: flex;
+                    align-items: center;
+                    
+                    margin-left:-17px;
+                gap: 10px;
+                background: purple;
+                box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+                position: relative;
+                }
+            }
 </style>
 
 <div class="div">
